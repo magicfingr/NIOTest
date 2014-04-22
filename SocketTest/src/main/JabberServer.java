@@ -1,3 +1,5 @@
+package main;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,7 +9,7 @@ import java.net.Socket;
  */
 public class JabberServer {
     // Choose a port outside of the range 1-1024:
-    public static final int PORT = 8080;
+    public static final int PORT = 8123;
 
     public static void main(String[] args)
             throws IOException {
@@ -39,7 +41,7 @@ public class JabberServer {
                     System.out.println("Echoing: " + str);
                     out.println(str);
                 }
-            // Always close the two sockets...
+                // Always close the two sockets...
             } finally {
                 System.out.println("closing...");
                 socket.close();
