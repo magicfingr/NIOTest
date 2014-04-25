@@ -10,12 +10,12 @@ import java.net.Socket;
  * use MultiHttpServer instead
  */
 public class PooledHttpServer {
-    private File docDirectory;
-    private String indexFileName;
-    private ServerSocket server;
     public static final int DEAULT_THREAD_NUM = 20;
     public static final int DEAULT_PORT = 8080;
     public static final String DEAULT_INDEX_FILE = "index.html";
+    private File docDirectory;
+    private String indexFileName;
+    private ServerSocket server;
 
     public PooledHttpServer(File docDirectory, int port, String indexFileName) throws IOException {
         if (!docDirectory.isDirectory())
@@ -23,23 +23,6 @@ public class PooledHttpServer {
         this.docDirectory = docDirectory;
         this.indexFileName = indexFileName;
         this.server = new ServerSocket(port);
-    }
-
-   public void listen(){
-        for (int i = 0; i < DEAULT_THREAD_NUM; i++) {
-            Thread t = new Thread(new PooledRequestProcessor(docDirectory, indexFileName));
-            t.start();
-        }
-       System.out.println("[INFO] server started at: " + server);
-       System.out.println("[INFO] document root: " + docDirectory);
-       while(true){
-           try {
-               Socket request = server.accept();
-               PooledRequestProcessor.processRequest(request);
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       }
     }
 
     public static void main(String[] args) {
@@ -54,8 +37,9 @@ public class PooledHttpServer {
         }
         try {
             port = Integer.parseInt(args[1]);
-        } catch (Exception e) {}
-        if(args.length >= 3)
+        } catch (Exception e) {
+        }
+        if (args.length >= 3)
             indexFileName = args[2];
         try {
             PooledHttpServer httpServer = new PooledHttpServer(docDirectory, port, indexFileName);
@@ -63,6 +47,23 @@ public class PooledHttpServer {
         } catch (IOException e) {
             System.out.println("[ERROR] failed to start server!");
             e.printStackTrace();
+        }
+    }
+
+    public void listen() {
+        for (int i = 0; i < DEAULT_THREAD_NUM; i++) {
+            Thread t = new Thread(new PooledRequestProcessor(docDirectory, indexFileName));
+            t.start();
+        }
+        System.out.println("[INFO] server started at: " + server);
+        System.out.println("[INFO] document root: " + docDirectory);
+        while (true) {
+            try {
+                Socket request = server.accept();
+                PooledRequestProcessor.processRequest(request);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

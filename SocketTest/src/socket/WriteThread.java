@@ -1,12 +1,13 @@
-package util;
+package socket;
 
 import java.io.*;
 
 /**
-* Created by zxt on 2014/4/23.
-*/
+ * Created by zxt on 2014/4/23.
+ */
 public class WriteThread extends Thread {
     Writer out;
+
     public WriteThread(OutputStream outputStream) {
         this.out = new OutputStreamWriter(outputStream);
     }
@@ -20,7 +21,7 @@ public class WriteThread extends Thread {
             while (true) {
                 //read from console
                 line = in.readLine();
-                if(null != line) {
+                if (null != line) {
                     out.write(line + "\r\n");
                     out.flush();
                     if (line.equals("quit")) break;

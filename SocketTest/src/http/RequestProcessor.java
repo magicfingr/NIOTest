@@ -3,18 +3,15 @@ package http;
 import java.io.*;
 import java.net.Socket;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 /**
  * Created by zxt on 2014/4/23.
- *
+ * <p/>
  * Note: the file encoding should be the same with content-type in the response http header,
  * or there will be some encoding problems.
  */
 public class RequestProcessor implements Runnable {
-    private static List<Socket> pool = new LinkedList<Socket>();
     private File docDirectory;
     private Socket request;
 

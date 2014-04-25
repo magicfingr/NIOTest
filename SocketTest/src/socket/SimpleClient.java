@@ -1,9 +1,6 @@
 package socket;
 
-import util.ReadThread;
-import util.WriteThread;
-
-import java.io.*;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;

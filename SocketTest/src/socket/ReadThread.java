@@ -1,4 +1,4 @@
-package util;
+package socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class ReadThread extends Thread {
             while (true) {
                 //read from socket
                 line = in.readLine();
-                if(null != line) {
+                if (null != line) {
                     System.out.println("remote: " + line);
                     if (line.equals("quit")) break;
                 } else break;

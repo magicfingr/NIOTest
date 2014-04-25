@@ -1,4 +1,4 @@
-package util;
+package socket.portscanner;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -12,16 +12,6 @@ import java.util.concurrent.*;
  * Created by zxt on 2014/4/22.
  */
 public class MultiPortScanner {
-    static final class ScanResult {
-        public final int port;
-        public final boolean isOpen;
-
-        ScanResult(int port, boolean isOpen) {
-            this.port = port;
-            this.isOpen = isOpen;
-        }
-    }
-
     public static Future<ScanResult> isPortOpen(final ExecutorService es, final String ip, final int port, final int timeout) {
         return es.submit(new Callable<ScanResult>() {
             @Override
@@ -61,5 +51,15 @@ public class MultiPortScanner {
         System.out.println("open port count: " + count);
         time = (new Date().getTime()) - time;
         System.out.println("time spend: " + time / 60000.0 + " minutes");   //50ms timeout -->> 2.5 minutes
+    }
+
+    static final class ScanResult {
+        public final int port;
+        public final boolean isOpen;
+
+        ScanResult(int port, boolean isOpen) {
+            this.port = port;
+            this.isOpen = isOpen;
+        }
     }
 }

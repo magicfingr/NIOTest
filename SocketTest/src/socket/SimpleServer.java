@@ -1,15 +1,12 @@
 package socket;
 
-import util.ReadThread;
-import util.WriteThread;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  * Created by zxt on 2014/4/23.
- *
+ * <p/>
  * 默认监听本机8123端口，显示客户端输入，并可以向客户端输出
  * 也可从控制台指定本机端口
  * 服务器端输入 quit 终止输出，待客户端也终止输入后关闭 socket

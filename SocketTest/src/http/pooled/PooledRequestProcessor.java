@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 /**
  * Created by zxt on 2014/4/23.
- *
+ * <p/>
  * use RequestProcessor instead
  */
 public class PooledRequestProcessor implements Runnable {

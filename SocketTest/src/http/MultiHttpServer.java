@@ -9,12 +9,15 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by zxt on 2014/4/23.
+ * <p/>
+ * server files in the docDirectory
+ * default addr: localhost:8080
  */
 public class MultiHttpServer {
+    public static final int DEFAULT_THREAD_NUM = 20;
+    public static final int DEFAULT_PORT = 8080;
     private File docDirectory;
     private ServerSocket server;
-    public static final int DEAULT_THREAD_NUM = 20;
-    public static final int DEAULT_PORT = 8080;
 
     public MultiHttpServer(File docDirectory, int port) throws IOException {
         if (!docDirectory.isDirectory())
@@ -23,24 +26,9 @@ public class MultiHttpServer {
         this.server = new ServerSocket(port);
     }
 
-    public void listen(){
-        System.out.println("[INFO] server started at: " + server);
-        System.out.println("[INFO] document root: " + docDirectory);
-        ExecutorService exec = Executors.newFixedThreadPool(DEAULT_THREAD_NUM);
-        while(true){
-            try {
-                Socket request = server.accept();
-                exec.execute(new RequestProcessor(docDirectory, request));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-//        exec.shutdown();
-    }
-
     public static void main(String[] args) {
         File docDirectory;
-        int port = DEAULT_PORT;
+        int port = DEFAULT_PORT;
 
         //test
         docDirectory = new File("D:\\temp");
@@ -53,7 +41,8 @@ public class MultiHttpServer {
 //        }
         try {
             port = Integer.parseInt(args[1]);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         try {
             MultiHttpServer httpServer = new MultiHttpServer(docDirectory, port);
             httpServer.listen();
@@ -61,5 +50,20 @@ public class MultiHttpServer {
             System.out.println("[ERROR] failed to start server!");
             e.printStackTrace();
         }
+    }
+
+    public void listen() {
+        System.out.println("[INFO] server started at: " + server);
+        System.out.println("[INFO] document root: " + docDirectory);
+        ExecutorService exec = Executors.newFixedThreadPool(DEFAULT_THREAD_NUM);
+        while (true) {
+            try {
+                Socket request = server.accept();
+                exec.execute(new RequestProcessor(docDirectory, request));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+//        exec.shutdown();
     }
 }
