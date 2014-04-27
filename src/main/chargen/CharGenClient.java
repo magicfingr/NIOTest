@@ -20,7 +20,7 @@ public class CharGenClient {
         SocketAddress addr = new InetSocketAddress(DEFAULT_HOST, DEFAULT_PORT);
         try {
             SocketChannel channel = SocketChannel.open(addr);
-            //un blocked io
+            //unblocked io
             channel.configureBlocking(false);
 
             ByteBuffer buffer = ByteBuffer.allocate(BUFFER_LENGTH);

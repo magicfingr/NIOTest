@@ -3,6 +3,8 @@ package socket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by zxt on 2014/4/23.
@@ -11,7 +13,8 @@ import java.net.Socket;
  * 也可从控制台指定本机端口
  * 服务器端输入 quit 终止输出，待客户端也终止输入后关闭 socket
  */
-public class SimpleServer {
+public class TCPServer {
+    private final static Logger LOGGER = Logger.getLogger("TCPServer");
     public static final int DEFAULT_PORT = 8123;
     private static int count = 1;
 
@@ -22,7 +25,7 @@ public class SimpleServer {
             try {
                 port = Integer.parseInt(args[0]);
                 if (port < 0 || port >= 65535) {
-                    System.out.println("[ERROR] port must between 0 ~ 65535");
+                    LOGGER.log(Level.SEVERE, "port must between 0 ~ 65535");
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -31,13 +34,13 @@ public class SimpleServer {
         }
         try {
             server = new ServerSocket(port);
-            System.out.println("[INFO] server started at: " + server);
+            LOGGER.log(Level.INFO, "server started at: " + server);
 
             //listening forever
             while (true) {
                 // Blocks until a connection occurs:
                 Socket socket = server.accept();
-                System.out.println("[INFO] connection " + (count++) + " accepted: " + socket);
+                LOGGER.log(Level.INFO, "connection " + (count++) + " accepted: " + socket);
                 Thread readThread = new ReadThread(socket.getInputStream());
                 readThread.start();
                 Thread writeThread = new WriteThread(socket.getOutputStream());
@@ -46,7 +49,7 @@ public class SimpleServer {
                 try {
                     readThread.join();
                     writeThread.join();
-                    System.out.println("[INFO] IO finished,  closing socket...");
+                    LOGGER.log(Level.INFO, "IO finished,  closing socket...");
                     socket.close();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

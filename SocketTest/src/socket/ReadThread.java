@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by zxt on 2014/4/23.
  */
 public class ReadThread extends Thread {
+    private static final Logger LOGGER = Logger.getLogger("ReadThread");
     BufferedReader in;
 
     public ReadThread(InputStream inputStream) {
@@ -29,7 +32,7 @@ public class ReadThread extends Thread {
                 } else break;
             }
         } catch (IOException e) {
-            System.out.println("[ERROR] remote socket closed unexpectedly.");
+            LOGGER.log(Level.SEVERE, "remote socket closed unexpectedly.");
 //            e.printStackTrace();
         }
     }
