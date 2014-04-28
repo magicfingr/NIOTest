@@ -1,4 +1,4 @@
-package socket;
+package udp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,14 +14,14 @@ public class UDPClient {
 
     public static void main(String[] args) {
         try {
-            InetAddress serverAddr = InetAddress.getByName(DEFAULT_HOT);
+            InetAddress address = InetAddress.getByName(DEFAULT_HOT);
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             DatagramSocket client = new DatagramSocket();
             while (true){
                 String line = reader.readLine();
                 if(line.equals("quit")) break;
                 byte[] data = line.getBytes("UTF-8");
-                DatagramPacket packet = new DatagramPacket(data, data.length, serverAddr, DEFAULT_PORT);
+                DatagramPacket packet = new DatagramPacket(data, data.length, address, DEFAULT_PORT);
                 client.send(packet);
             }
         } catch (UnknownHostException e) {

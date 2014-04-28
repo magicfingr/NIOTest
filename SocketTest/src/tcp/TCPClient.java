@@ -1,4 +1,4 @@
-package socket;
+package tcp;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -8,7 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Administrator on 14-4-19.
+ * Created by zxt on 14-4-19.
+ * 默认连接本地8123端口，用两个线程控制输入输出
+ * 客户端输入 quit 终止输出，待服务器端终止输入后关闭 tcp
  */
 public class TCPClient {
     public static final String DEFAULT_HOST = "localhost";
@@ -37,7 +39,7 @@ public class TCPClient {
         Socket socket = null;
         try {
             socket = new Socket(addr, port);
-            LOGGER.log(Level.INFO, "connected to addr: " + addr + ",  socket: " + socket);
+            LOGGER.log(Level.INFO, "connected to addr: " + addr + ",  tcp: " + socket);
 
             Thread readThread = new ReadThread(socket.getInputStream());
             readThread.start();
@@ -47,7 +49,7 @@ public class TCPClient {
             try {
                 readThread.join();
                 writeThread.join();
-                LOGGER.log(Level.INFO, "IO finished,  closing socket...");
+                LOGGER.log(Level.INFO, "IO finished,  closing tcp...");
                 socket.close();
             } catch (InterruptedException e) {
                 e.printStackTrace();

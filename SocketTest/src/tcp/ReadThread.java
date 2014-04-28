@@ -1,4 +1,4 @@
-package socket;
+package tcp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class ReadThread extends Thread {
         String line;
         try {
             while (true) {
-                //read from socket
+                //read from tcp
                 line = in.readLine();
                 if (null != line) {
                     System.out.println("remote: " + line);
@@ -32,7 +32,7 @@ public class ReadThread extends Thread {
                 } else break;
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "remote socket closed unexpectedly.");
+            LOGGER.log(Level.SEVERE, "remote tcp closed unexpectedly.");
 //            e.printStackTrace();
         }
     }

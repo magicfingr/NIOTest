@@ -1,4 +1,4 @@
-package socket.portscanner;
+package tcp.portscanner;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 /**
  * Created by zxt on 2014/4/22.
  * <p/>
- * working but really slow when scanning, see MultiPortScanner.java
+ * 扫描速度很慢，见多线程实现 MultiPortScanner.java
  */
 public class PortScanner {
     public static void main(String[] args) throws IOException {

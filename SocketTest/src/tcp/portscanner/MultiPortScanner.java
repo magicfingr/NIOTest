@@ -1,4 +1,4 @@
-package socket.portscanner;
+package tcp.portscanner;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -10,6 +10,7 @@ import java.util.concurrent.*;
 
 /**
  * Created by zxt on 2014/4/22.
+ * 端口扫描器的多线程版本
  */
 public class MultiPortScanner {
     public static Future<ScanResult> isPortOpen(final ExecutorService es, final String ip, final int port, final int timeout) {

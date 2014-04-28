@@ -1,4 +1,4 @@
-package socket;
+package udp;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -23,9 +23,8 @@ public class UDPServer {
                 try {
                     server.receive(packet);
                     String s = new String(packet.getData(), 0, packet.getLength(), "UTF-8");
-                    System.out.println("[INFO] client msg: " + s);
                     System.out.println("[INFO] " + packet.getAddress() +
-                            " at port " + packet.getPort() + " says " + s);
+                            " at port " + packet.getPort() + " says: " + s);
                     //set next packet length
                     packet.setLength(buffer.length);
 

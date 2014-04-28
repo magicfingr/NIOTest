@@ -1,4 +1,4 @@
-package socket;
+package tcp;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -31,7 +31,7 @@ public class WriteThread extends Thread {
                 } else break;
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "remote socket closed unexpectedly.");
+            LOGGER.log(Level.SEVERE, "remote tcp closed unexpectedly.");
 //            e.printStackTrace();
         }
     }

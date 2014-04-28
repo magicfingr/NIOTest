@@ -10,6 +10,7 @@ import java.nio.channels.WritableByteChannel;
 
 /**
  * Created by zxt on 2014/4/24.
+ * 字符生成器客户端，一直循环读取服务器传回的数据
  */
 public class CharGenClient {
     private static final String DEFAULT_HOST = "localhost";
@@ -20,7 +21,7 @@ public class CharGenClient {
         SocketAddress addr = new InetSocketAddress(DEFAULT_HOST, DEFAULT_PORT);
         try {
             SocketChannel channel = SocketChannel.open(addr);
-            //unblocked io
+            //设置非阻塞工作模式（对此处的客户端实际意义不大）
             channel.configureBlocking(false);
 
             ByteBuffer buffer = ByteBuffer.allocate(BUFFER_LENGTH);
@@ -28,6 +29,7 @@ public class CharGenClient {
 
             while (true){
                 int n = channel.read(buffer);
+                //若数据并未准备好，则read返回-1
                 if(n > 0) {
                     buffer.flip();
                     out.write(buffer);

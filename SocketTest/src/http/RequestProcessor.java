@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Date;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by zxt on 2014/4/23.
@@ -12,6 +14,7 @@ import java.util.StringTokenizer;
  * or there will be some encoding problems.
  */
 public class RequestProcessor implements Runnable {
+    private final static Logger LOGGER = Logger.getLogger("RequestProcessor");
     private File docDirectory;
     private Socket request;
 
@@ -27,7 +30,7 @@ public class RequestProcessor implements Runnable {
             Writer out = new OutputStreamWriter(raw);
             BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String line = in.readLine();
-            System.out.println("[INFO] request: " + line);
+            LOGGER.log(Level.INFO, "request: " + line);
             StringTokenizer tokenizer = new StringTokenizer(line);
 
             String fileName;

@@ -6,16 +6,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by zxt on 2014/4/23.
  * <p/>
- * server files in the docDirectory
- * default addr: localhost:8080
+ * 提供 docDirectory 目录下的文件访问
+ * 默认工作在80端口
  */
 public class MultiHttpServer {
+    private final static Logger LOGGER = Logger.getLogger("MultiHttpServer");
     public static final int DEFAULT_THREAD_NUM = 20;
-    public static final int DEFAULT_PORT = 8080;
+    public static final int DEFAULT_PORT = 80;
     private File docDirectory;
     private ServerSocket server;
 
@@ -30,9 +33,9 @@ public class MultiHttpServer {
         File docDirectory;
         int port = DEFAULT_PORT;
 
-        //test
+        //测试文件路径
         docDirectory = new File("D:\\temp");
-        //test
+        //从命令行取得文件路径
 //        try {
 //            docDirectory = new File(args[0]);
 //        } catch (ArrayIndexOutOfBoundsException e) {
@@ -53,9 +56,10 @@ public class MultiHttpServer {
     }
 
     public void listen() {
-        System.out.println("[INFO] server started at: " + server);
-        System.out.println("[INFO] document root: " + docDirectory);
+        LOGGER.log(Level.INFO, "server started at: " + server);
+        LOGGER.log(Level.INFO, "document root: " + docDirectory);
         ExecutorService exec = Executors.newFixedThreadPool(DEFAULT_THREAD_NUM);
+        //持续监听
         while (true) {
             try {
                 Socket request = server.accept();
