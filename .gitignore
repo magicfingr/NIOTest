@@ -3,4 +3,6 @@
 /.settings
 /target
 /.metadata
-/.idea/
+/.idea
+/out
+/src/test
