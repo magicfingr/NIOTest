@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 /**
  * Created by zxt on 2014/4/23.
  * <p/>
- * Note: the file encoding should be the same with content-type in the response http header,
- * or there will be some encoding problems.
+ * 注意：实际的文件编码要和返回的HTTP头部中content-type描述的文件编码一致
+ * 否则浏览器显示时会出现编码问题
  */
 public class RequestProcessor implements Runnable {
     private final static Logger LOGGER = Logger.getLogger("RequestProcessor");
@@ -31,18 +31,19 @@ public class RequestProcessor implements Runnable {
             BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String line = in.readLine();
             LOGGER.log(Level.INFO, "request: " + line);
+            //请求消息如：GET /index.html HTTP/1.1，需将三个字段分别取出（某些旧的浏览器可能没有协议字段）
             StringTokenizer tokenizer = new StringTokenizer(line);
-
             String fileName;
             String contentType;
             String method = tokenizer.nextToken();
-            String version = "";
+            String version = "";    //HTTP协议版本（可能为空）
             if (method.endsWith("GET")) {
                 fileName = tokenizer.nextToken();
                 contentType = guessContentTypeFromName(fileName);
                 if (tokenizer.hasMoreTokens())
                     version = tokenizer.nextToken();
                 File file = new File(docDirectory, fileName.substring(1));
+                //判断实际访问的文件路径是否在服务器提供的路径下（防止客户端使用 "/../" 访问服务器其他目录文件）
                 if (file.canRead() && file.getCanonicalPath().startsWith(docDirectory.getPath())) {
                     //read file
                     DataInputStream fs = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));

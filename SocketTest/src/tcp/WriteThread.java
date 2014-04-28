@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 /**
  * Created by zxt on 2014/4/23.
+ * 输出线程
  */
 public class WriteThread extends Thread {
     private static final Logger LOGGER = Logger.getLogger("WriteThread");

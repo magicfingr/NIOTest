@@ -19,6 +19,7 @@ public class MultiHttpServer {
     private final static Logger LOGGER = Logger.getLogger("MultiHttpServer");
     public static final int DEFAULT_THREAD_NUM = 20;
     public static final int DEFAULT_PORT = 80;
+    public static final String DEFAULT_DIR = "D:\\temp";
     private File docDirectory;
     private ServerSocket server;
 
@@ -32,25 +33,27 @@ public class MultiHttpServer {
     public static void main(String[] args) {
         File docDirectory;
         int port = DEFAULT_PORT;
-
-        //测试文件路径
-        docDirectory = new File("D:\\temp");
-        //从命令行取得文件路径
-//        try {
-//            docDirectory = new File(args[0]);
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            System.out.println("Usage: java PooledHttpServer [documentRoot] [port] [indexFileName]");
-//            return;
-//        }
+        //从命令行获取端口与服务器根目录
         try {
-            port = Integer.parseInt(args[1]);
+            port = Integer.parseInt(args[0]);
         } catch (Exception e) {
+            //use default port
+        }
+        if(args.length > 1) {
+            try {
+                docDirectory = new File(args[0]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Usage: java PooledHttpServer [port] [documentRoot]");
+                return;
+            }
+        } else {
+            docDirectory = new File(DEFAULT_DIR);
         }
         try {
             MultiHttpServer httpServer = new MultiHttpServer(docDirectory, port);
             httpServer.listen();
         } catch (IOException e) {
-            System.out.println("[ERROR] failed to start server!");
+            LOGGER.log(Level.SEVERE, "failed to start server!");
             e.printStackTrace();
         }
     }

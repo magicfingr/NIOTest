@@ -10,11 +10,11 @@ import java.net.SocketException;
  */
 public class UDPServer {
     public static final int DEFAULT_PORT = 9;
-    public static final int MAX_PACKAET_SIZE = 1472;
+    public static final int MAX_PACKET_SIZE = 1472;
 
     public static void main(String[] args) {
         int port = DEFAULT_PORT;
-        byte[] buffer = new byte[MAX_PACKAET_SIZE];
+        byte[] buffer = new byte[MAX_PACKET_SIZE];
 
         try {
             DatagramSocket server = new DatagramSocket(port);

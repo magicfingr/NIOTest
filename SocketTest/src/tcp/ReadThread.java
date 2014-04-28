@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 /**
  * Created by zxt on 2014/4/23.
+ * 输入线程
  */
 public class ReadThread extends Thread {
     private static final Logger LOGGER = Logger.getLogger("ReadThread");
